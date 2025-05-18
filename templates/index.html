@@ -1,36 +1,30 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8" />
-    <title>YOLO Baret/Yelek Tespiti</title>
+    <meta charset="UTF-8">
+    <title>Baret Tespit Sistemi</title>
 </head>
 <body>
-    <h1>Fotoğraf veya Video Yükle</h1>
-
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-
+    <h1>Baret Tespiti</h1>
     <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*,video/*" required />
-        <button type="submit">Yükle ve İşle</button>
+        <input type="file" name="file" required>
+        <button type="submit">Yükle ve Tespit Et</button>
     </form>
 
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
     {% if result_image %}
-        <h3>Sonuç Fotoğraf:</h3>
-        <img src="{{ url_for('static', filename=result_image) }}" alt="Sonuç Görüntüsü" style="max-width: 80%; height: auto;" />
-        <p>Baretli Kişi Sayısı: {{ baretli }}</p>
-        <p>Baretsiz Kişi Sayısı: {{ baretsiz }}</p>
-        <p>Toplam Kafa Sayısı: {{ kafali }}</p>
+        <h2>Görsel Sonucu:</h2>
+        <img src="{{ url_for('static', filename='result/' + result_image) }}" width="640">
+        <p>Baretli: {{ baretli }}</p>
+        <p>Baretsiz: {{ baretsiz }}</p>
     {% endif %}
 
     {% if result_video %}
-        <h3>Sonuç Video:</h3>
-        <video controls width="720" height="480">
-            <source src="{{ url_for('static', filename='result/' + result_video) }}?t={{ now }}" type="video/mp4" />
-            Tarayıcınız video etiketini desteklemiyor.
-        </video>
+        <h2>Video Canlı Analiz:</h2>
+        <img src="{{ url_for('video_feed', filename=result_video) }}" width="720">
     {% endif %}
-
 </body>
 </html>
