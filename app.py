@@ -8,7 +8,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Model yükleniyor
-model = YOLO("best.pt")  # Kendi eğittiğin YOLOv8 modelinin yolu
+model = YOLO("best.pt")  # Kendi eğittiğin YOLOv11 modelinin yolu
 
 # Klasörler
 UPLOAD_FOLDER = 'uploads'
