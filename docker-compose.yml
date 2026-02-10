@@ -1,0 +1,15 @@
+services:
+  helmet-tracker:
+    build: .
+    container_name: helmet-tracker
+    ports:
+      - "8083:8083"
+    volumes:
+      - .:/app
+      - ./uploads:/app/uploads
+      - ./static/result:/app/static/result
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 2G
