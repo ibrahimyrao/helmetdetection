@@ -1,4 +1,7 @@
-flask
+django
+django-environ
+whitenoise
 ultralytics
 opencv-python-headless
-werkzeug
+gunicorn
+python-multipart

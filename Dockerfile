@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Çıkış portunu ayarla
-EXPOSE 8082
+EXPOSE 8000
 
 # Uygulamayı çalıştır
-CMD ["python", "app.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application", "--timeout", "120"]

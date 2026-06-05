@@ -1,15 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LASMON | AI Helmet Detection</title>
+    <title>AI Safety | Helmet Detection</title>
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
 
     <style>
         :root {
@@ -372,6 +374,30 @@
 
         .loading .spinner { display: inline-block; }
         .loading .btn-text { display: none; }
+
+        .helmet-icon {
+            width: 1.2em;
+            height: 1.2em;
+            vertical-align: middle;
+            fill: currentColor;
+            display: inline-block;
+        }
+
+        .header-icon {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 24px;
+            fill: url(#orange-gradient);
+            filter: drop-shadow(0 0 20px rgba(255, 157, 0, 0.4));
+        }
+
+        .upload-icon {
+            width: 84px;
+            height: 84px;
+            margin-bottom: 24px;
+            fill: url(#orange-gradient);
+            filter: drop-shadow(0 0 10px rgba(255, 157, 0, 0.2));
+        }
     </style>
 </head>
 <body>
@@ -380,16 +406,36 @@
         <div class="spotlight-inner"></div>
     </div>
 
+    <!-- SVG Gradients Definition -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color: #ff9d00; stop-opacity: 1" />
+                <stop offset="100%" style="stop-color: #ff4b2b; stop-opacity: 1" />
+            </linearGradient>
+            <linearGradient id="green-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color: #00ff88; stop-opacity: 1" />
+                <stop offset="100%" style="stop-color: #00d2ff; stop-opacity: 1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
     <div class="container">
         <header>
+            <svg class="helmet-icon header-icon" viewBox="0 0 640 640">
+                <path d="M384 328L384 128C384 110.3 369.7 96 352 96L288 96C270.3 96 256 110.3 256 128L256 328C256 341.3 245.3 352 232 352C218.7 352 208 341.3 208 328L208 142.1C122 173.8 64 255.8 64 352L64 416L576 416L576 352C575 256.8 517.6 174.3 432 142.2L432 328C432 341.3 421.3 352 408 352C394.7 352 384 341.3 384 328zM72 464C49.9 464 32 481.9 32 504C32 526.1 49.9 544 72 544L568 544C590.1 544 608 526.1 608 504C608 481.9 590.1 464 568 464L72 464z"/>
+            </svg>
             <span class="brand">Advanced Safety Analytics</span>
             <h1>AI Helmet Detection</h1>
         </header>
 
         <div class="upload-card">
-            <form method="post" action="/" enctype="multipart/form-data" id="upload-form">
+            <form method="post" action="{% url 'index' %}" enctype="multipart/form-data" id="upload-form">
+                {% csrf_token %}
                 <label class="drop-zone" id="drop-zone" for="file-input">
-                    <i class="fas fa-hard-hat"></i>
+                    <svg class="helmet-icon upload-icon" viewBox="0 0 640 640">
+                        <path d="M384 328L384 128C384 110.3 369.7 96 352 96L288 96C270.3 96 256 110.3 256 128L256 328C256 341.3 245.3 352 232 352C218.7 352 208 341.3 208 328L208 142.1C122 173.8 64 255.8 64 352L64 416L576 416L576 352C575 256.8 517.6 174.3 432 142.2L432 328C432 341.3 421.3 352 408 352C394.7 352 384 341.3 384 328zM72 464C49.9 464 32 481.9 32 504C32 526.1 49.9 544 72 544L568 544C590.1 544 608 526.1 608 504C608 481.9 590.1 464 568 464L72 464z"/>
+                    </svg>
                     <p>Drop file here or<br><strong>Click to browse</strong></p>
                     <span style="display: block; margin-top: 10px; font-size: 0.8rem; color: var(--text-secondary);">
                         Maximum 50MB (JPG, PNG, MP4, AVI)
@@ -430,7 +476,7 @@
 
                 <div class="result-grid">
                     <div class="image-wrapper">
-                        <img src="{{ url_for('static', filename='result/' + result_image) }}" alt="Processed Image" />
+                        <img src="{{ result_image }}" alt="Processed Image" />
                     </div>
                     
                     <div class="stats-panel">
@@ -458,7 +504,7 @@
                     </div>
                 </div>
                 <div class="image-wrapper" style="border-radius: 24px;">
-                    <img src="{{ url_for('video_feed', filename=result_video) }}" alt="Live Feed" style="width: 100%;" />
+                    <img src="{% url 'video_feed' filename=result_video %}" alt="Live Feed" style="width: 100%;" />
                 </div>
             </div>
         </div>
@@ -473,7 +519,7 @@
         </div>
 
         <footer style="margin-top: 40px; color: var(--text-secondary); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; text-align: center; padding-bottom: 40px;">
-            &copy; 2026 LASMON &bull; AI Safety Division
+            &copy; 2026 AI Safety Division &bull; Hard Hat Protection Systems
         </footer>
     </div>
 

@@ -1,5 +1,29 @@
-.DS_Store
+# Byte-compiled / optimized
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Virtual env
+venv/
+.venv/
+
+# Database
+db.sqlite3
+
+# Media & Uploads
+media/
 uploads/
 static/result/
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
